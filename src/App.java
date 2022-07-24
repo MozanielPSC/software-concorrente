@@ -1,25 +1,38 @@
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 public class App {
     public static void main(String[] args) throws Exception {
-       getConnection();
+        Connection connection = null;
+        try {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/sergio",
+                "root", "password");
+ 
+            // mydb is database
+            // mydbuser is name of database
+            // mydbuser is password of database
+ 
+            Statement statement;
+            statement = connection.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(
+                "select * from designation");
+            int code;
+            String title;
+            while (resultSet.next()) {
+                code = resultSet.getInt("code");
+                title = resultSet.getString("title").trim();
+                System.out.println("Code : " + code
+                                   + " Title : " + title);
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        }
+        catch (Exception exception) {
+            System.out.println(exception);
+        }
+    } // function ends
     }
-
-public static Connection getConnection() throws Exception{
-  try{
-   String driver = "com.mysql.cj.jdbc.Driver";
-   String url = "jdbc:mysql://=localhost:3306/sergio_db";
-   String username = "sergio";
-   String password = "password";
-   Class.forName(driver);
-   
-   Connection conn = DriverManager.getConnection(url,username,password);
-   System.out.println("Connected");
-   return conn;
-  } catch(Exception e){System.out.println(e);}
-  
-  
-  return null;
- }
-}
