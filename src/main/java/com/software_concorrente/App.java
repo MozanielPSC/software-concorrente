@@ -8,7 +8,8 @@ public class App
 {
     public static void main( String[] args )
     {
-    Queries query = new Queries();
-        query.teste();
+        Queries query = new Queries();
+        String[] teste = query.signIn();
+        query.login(teste);
     }
 }
