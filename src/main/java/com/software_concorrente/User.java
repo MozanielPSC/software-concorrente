@@ -1,21 +1,14 @@
 package com.software_concorrente;
 
 public class User extends Thread{
-    public void login(){
-        
-    }
-    public void selectAll(){
-
-    }
-    public void delete(){
-
-    }
-
-    public void create(){
-
+    private ControlaAcesso monitor;
+    public User(ControlaAcesso m) {
+        this.monitor = m;
     }
     @Override
     public void run(){
-        
+       monitor.request();
+       monitor.usaRecurso();
+       monitor.release();
     }
 }
